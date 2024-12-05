@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Administrador</title>
+    <style>
+       body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('AdminN.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            filter: contrast(1.1) brightness(1.05);
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .container h1 {
+            text-align: center;
+            font-size: 2.2em;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1em;
+            background: #f9f9f9;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #4caf50;
+            background: #fff;
+        }
+        .error {
+            border-color: red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: none;
+        }
+        button {
+            padding: 12px;
+            background: #4caf50;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background: #43a047;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                border-radius: 10px;
+            }
+            .container h1 {
+                font-size: 1.8em;
+            }
+            button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Panel del Administrador</h1>
+        <form id="form-animal" action="/animales" method="POST" novalidate>
+            <!-- Nombre del Animal -->
+            <div class="form-group">
+                <label for="nombre">Nombre del Animal:</label>
+                <input type="text" id="nombre" name="Nombre" placeholder="Ejemplo: León" required>
+                <p class="error-message" id="nombre-error"></p>
+            </div>
+
+            <!-- Especie -->
+            <div class="form-group">
+                <label for="especie">Especie:</label>
+                <input type="text" id="especie" name="Especie" placeholder="Ejemplo: Felino" required>
+                <p class="error-message" id="especie-error"></p>
+            </div>
+
+            <!-- Edad -->
+            <div class="form-group">
+                <label for="edad">Edad (años):</label>
+                <input type="number" id="edad" name="Edad" placeholder="Ejemplo: 5" required>
+                <p class="error-message" id="edad-error"></p>
+            </div>
+
+            <!-- Hábitat -->
+            <div class="form-group">
+                <label for="habitat">Hábitat:</label>
+                <select id="habitat" name="Habitat" required>
+                    <option value="" disabled selected>Seleccione el hábitat</option>
+                    <option value="Bosque">Bosque</option>
+                    <option value="Sabana">Sabana</option>
+                    <option value="Selva">Selva</option>
+                    <option value="Desierto">Desierto</option>
+                    <option value="Marino">Marino</option>
+                    <option value="Rios">Ríos y lagos</option>
+                    <option value="Montañas">Montañas</option>
+                    <option value="Artico">Ártico</option>
+                </select>
+                <img id="habitat-image" src="" alt="Imagen del hábitat" style="display: none; margin-top: 10px; max-width: 100%; height: auto;">
+                <p class="error-message" id="habitat-error"></p>
+            </div>
+
+            <!-- Dieta -->
+            <div class="form-group">
+                <label for="dieta">Dieta:</label>
+                <input type="text" id="dieta" name="dieta" placeholder="Ejemplo: Carnívoro" required>
+                <p class="error-message" id="dieta-error"></p>
+            </div>
+
+            <!-- Estado de Conservación -->
+            <div class="form-group">
+                <label for="estado">Estado de Conservación:</label>
+                <select id="estado" name="Estado_Conservacion" required>
+                    <option value="" disabled selected>Seleccione el estado</option>
+                    <option value="Extinto">Extinto</option>
+                    <option value="Extinto en estado silvestre">Extinto en estado silvestre</option>
+                    <option value="En peligro crítico">En peligro crítico</option>
+                    <option value="En peligro">En peligro</option>
+                    <option value="Vulnerable">Vulnerable</option>
+                    <option value="Casi amenazado">Casi amenazado</option>
+                    <option value="Preocupación menor">Preocupación menor</option>
+                </select>
+                <p class="error-message" id="estado-error"></p>
+            </div>
+
+            <!-- País -->
+            <div class="form-group">
+                <label for="pais">País de Origen:</label>
+                <input type="text" id="pais" name="Pais_Origen" placeholder="Ejemplo: Kenia" required>
+                <p class="error-message" id="pais-error"></p>
+            </div>
+
+            <!-- Descripción -->
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="Descripcion" placeholder="Escriba una descripción del animal..." required></textarea>
+                <p class="error-message" id="descripcion-error"></p>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" id="submit-button">Registrar Animal</button>
+            <button type="button" id="update-button" style="display:none;">Guardar Cambios</button>
+        </form>
+
+        <!-- Botón para eliminar animales -->
+        <button id="eliminar-button">Eliminar Animal</button>
+
+        <!-- Botón para buscar y actualizar animales -->
+        <button id="actualizar-button">Buscar Animal para Actualizar</button>
+
+        <!-- Botón para ir al formulario de usuario -->
+        <button onclick="location.href='/usuario'">Ir al Formulario de Usuario</button>
+    </div>
+
+    <script>
+        // Función de validación para el formulario
+        function validateForm() {
+            let isValid = true;
+           
+            document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
+            document.querySelectorAll('input, select, textarea').forEach(input => input.classList.remove('error'));
+
+            // Validación de cada campo
+            const nombre = document.getElementById('nombre');
+            if (!nombre.value.trim()) {
+                document.getElementById('nombre-error').textContent = 'El nombre del animal es obligatorio.';
+                nombre.classList.add('error');
+                isValid = false;
+            }
+
+            const especie = document.getElementById('especie');
+            if (!especie.value.trim()) {
+                document.getElementById('especie-error').textContent = 'La especie es obligatoria.';
+                especie.classList.add('error');
+                isValid = false;
+            }
+
+            const edad = document.getElementById('edad');
+            if (!edad.value.trim() || edad.value <= 0) {
+                document.getElementById('edad-error').textContent = 'La edad debe ser un número mayor que 0.';
+                edad.classList.add('error');
+                isValid = false;
+            }
+
+            const habitat = document.getElementById('habitat');
+            if (!habitat.value) {
+                document.getElementById('habitat-error').textContent = 'El hábitat es obligatorio.';
+                habitat.classList.add('error');
+                isValid = false;
+            }
+
+            const dieta = document.getElementById('dieta');
+            if (!dieta.value.trim()) {
+                document.getElementById('dieta-error').textContent = 'La dieta es obligatoria.';
+                dieta.classList.add('error');
+                isValid = false;
+            }
+
+            const estado = document.getElementById('estado');
+            if (!estado.value) {
+                document.getElementById('estado-error').textContent = 'El estado de conservación es obligatorio.';
+                estado.classList.add('error');
+                isValid = false;
+            }
+
+            const pais = document.getElementById('pais');
+            if (!pais.value.trim()) {
+                document.getElementById('pais-error').textContent = 'El país de origen es obligatorio.';
+                pais.classList.add('error');
+                isValid = false;
+            }
+
+            const descripcion = document.getElementById('descripcion');
+            if (!descripcion.value.trim()) {
+                document.getElementById('descripcion-error').textContent = 'La descripción es obligatoria.';
+                descripcion.classList.add('error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Manejo del formulario para validar datos antes de enviar
+        document.getElementById('form-animal').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                const form = e.target;
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                try {
+                    const response = await fetch('/animales', {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (response.ok) {
+                        alert('Animal registrado exitosamente.');
+                        form.reset();
+                    } else {
+                        alert('Hubo un error al registrar el animal.');
+                    }
+                } catch (error) {
+                    console.error('Error al registrar animal:', error);
+                    alert('Error al registrar el animal. Intente nuevamente.');
+                }
+            }
+        });
+
+        // Mostrar la imagen del hábitat según la selección
+        document.getElementById('habitat').addEventListener('change', (e) => {
+            const habitat = e.target.value.toLowerCase();
+            const imageUrl = `images/habitats/${habitat}.jpg`;
+
+            const imageElement = document.getElementById('habitat-image');
+            imageElement.src = imageUrl;
+            imageElement.style.display = 'block';
+        });
+
+        // Función para eliminar un animal
+        document.getElementById('eliminar-button').addEventListener('click', async () => {
+            const nombreAnimal = prompt("Ingrese el nombre del animal que desea eliminar:");
+
+            if (nombreAnimal) {
+                try {
+                    const response = await fetch(`/animales/${nombreAnimal}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        alert('Animal eliminado exitosamente.');
+                    } else {
+                        alert('No se pudo eliminar el animal.');
+                    }
+                } catch (error) {
+                    console.error('Error al eliminar el animal:', error);
+                    alert('Error al eliminar el animal. Intente nuevamente.');
+                }
+            }
+        });
+
+        // Función para buscar y actualizar un animal
+        document.getElementById('actualizar-button').addEventListener('click', async () => {
+            const nombreAnimal = prompt("Ingrese el nombre del animal que desea actualizar:");
+
+            if (nombreAnimal) {
+                try {
+                    const response = await fetch(`/animales/${nombreAnimal}`, { method: 'GET' });
+                    if (response.ok) {
+                        const animal = await response.json();
+
+                        // Llenar el formulario con los datos del animal
+                        document.getElementById('nombre').value = animal.Nombre;
+                        document.getElementById('especie').value = animal.Especie;
+                        document.getElementById('edad').value = animal.Edad;
+                        document.getElementById('habitat').value = animal.Habitat;
+                        document.getElementById('dieta').value = animal.Dieta;
+                        document.getElementById('estado').value = animal.Estado_Conservacion;
+                        document.getElementById('pais').value = animal.Pais_Origen;
+                        document.getElementById('descripcion').value = animal.Descripcion;
+
+                        // Mostrar la imagen del hábitat
+                        const imageUrl = `images/habitats/${animal.Habitat.toLowerCase()}.jpg`;
+                        const imageElement = document.getElementById('habitat-image');
+                        imageElement.src = imageUrl;
+                        imageElement.style.display = 'block';
+
+                        // Mostrar el botón de "Guardar Cambios"
+                        document.getElementById('update-button').style.display = 'inline-block';
+                    } else {
+                        alert('No se encontró el animal.');
+                    }
+                } catch (error) {
+                    console.error('Error al buscar animal:', error);
+                    alert('Error al buscar el animal. Intente nuevamente.');
+                }
+            }
+        });
+
+        // Aplicar cambios al animal
+        document.getElementById('update-button').addEventListener('click', async () => {
+            const form = document.getElementById('form-animal');
+            if (validateForm()) {
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                const nombreAnimal = data.Nombre;
+
+                try {
+                    const response = await fetch(`/animales/${nombreAnimal}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(data),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    if (response.ok) {
+                        alert('Animal actualizado exitosamente.');
+                        form.reset();
+                        document.getElementById('update-button').style.display = 'none'; 
+                    } else {
+                        alert('No se pudo actualizar el animal.');
+                    }
+                } catch (error) {
+                    console.error('Error al actualizar animal:', error);
+                    alert('Error al actualizar el animal. Intente nuevamente.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
