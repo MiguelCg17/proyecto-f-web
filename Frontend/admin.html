@@ -197,6 +197,7 @@
     </div>
 
     <script>
+        const url = "https://proyecto-f-web.onrender.com";
         // Función de validación para el formulario
         function validateForm() {
             let isValid = true;
@@ -274,7 +275,7 @@
                 const data = Object.fromEntries(formData.entries());
 
                 try {
-                    const response = await fetch('/animales', {
+                    const response = await fetch(`${url}/animales`, {
                         method: 'POST',
                         body: JSON.stringify(data),
                         headers: {
@@ -310,7 +311,7 @@
 
             if (nombreAnimal) {
                 try {
-                    const response = await fetch(`/animales/${nombreAnimal}`, { method: 'DELETE' });
+                    const response = await fetch(`${url}/animales/${nombreAnimal}`, { method: 'DELETE' });
                     if (response.ok) {
                         alert('Animal eliminado exitosamente.');
                     } else {
@@ -329,7 +330,7 @@
 
             if (nombreAnimal) {
                 try {
-                    const response = await fetch(`/animales/${nombreAnimal}`, { method: 'GET' });
+                    const response = await fetch(`${url}/animales/${nombreAnimal}`, { method: 'GET' });
                     if (response.ok) {
                         const animal = await response.json();
 
@@ -370,7 +371,7 @@
                 const nombreAnimal = data.Nombre;
 
                 try {
-                    const response = await fetch(`/animales/${nombreAnimal}`, {
+                    const response = await fetch(`${url}/animales/${nombreAnimal}`, {
                         method: 'PUT',
                         body: JSON.stringify(data),
                         headers: {

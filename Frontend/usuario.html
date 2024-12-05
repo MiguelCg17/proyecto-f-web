@@ -103,9 +103,10 @@
     <button onclick="location.href='/login'">Regresar al Login</button>
 
     <script>
+         const url = "https://proyecto-f-web.onrender.com"; 
         async function cargarAnimales() {
             try {
-                const response = await fetch('/animales');
+                const response = await fetch(`${url}/animales`);
                 if (response.ok) {
                     const animales = await response.json();
                     const lista = document.getElementById('lista-animales');
@@ -123,7 +124,7 @@
 
         async function cargarDetallesAnimal(nombre) {
             try {
-                const response = await fetch(`/animales/${nombre}`);
+                const response = await fetch(`${url}/animales/${nombre}`);
                 if (response.ok) {
                     const animal = await response.json();
 
@@ -163,7 +164,7 @@
         document.getElementById('pdf-button').addEventListener('click', () => {
             const nombre = prompt("Ingrese el nombre del animal para generar el PDF:");
             if (nombre) {
-                window.open(`/generar-pdf/${nombre}`, '_blank');
+                window.open(`${url}/generar-pdf/${nombre}`, '_blank');
             } else {
                 alert("Debe ingresar un nombre válido.");
             }
