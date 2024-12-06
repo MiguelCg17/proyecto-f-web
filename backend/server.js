@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const pdf = require('pdfkit');
 const fs = require('fs');
 require('dotenv').config();  // Cargar las variables de entorno desde el archivo .env
+
 const app = express();
 const port = process.env.PORT || 3000;  // Usa la variable de entorno PORT
 
@@ -12,18 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
-const dbUrl= process.env.DB_URL;
-const db = mysql.createPool(dbUrl)
+const dbUrl = process.env.DB_URL;
 
-db.connect(err => {
-    if (err) {
-        console.error('Error al conectar con la base de datos:', err.message);
-        process.exit(1);
-    }
-    console.log('Se conectó correctamente a la base de datos.');
-});
 
-app.use(express.static(path.join(__dirname, '..', 'Frontend')));
+const db = mysql.createPool(dbUrl);
+
+
 
 // Ruta para servir el formulario de inicio de sesión
 app.get('/login', (req, res) => {
