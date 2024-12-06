@@ -3,20 +3,17 @@ const path = require('path');
 const mysql = require('mysql2');
 const pdf = require('pdfkit');
 const fs = require('fs');
+require('dotenv').config();  // Cargar las variables de entorno desde el archivo .env
 const app = express();
+const port = process.env.PORT || 3000;  // Usa la variable de entorno PORT
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));  // Este middleware es necesario para procesar los datos del formulario
+app.use(express.urlencoded({ extended: true }));
 
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
-// Conexión a la base de datos MySQL
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'zoologico',
-});
+const dbUrl= process.env.DB_URL;
+const pool = mysql.createPool(dbUrl)
 
 db.connect(err => {
     if (err) {
@@ -206,6 +203,6 @@ app.put('/animales/:nombre', (req, res) => {
 });
 
 // Iniciar el servidor
-app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+app.listen(port, () => {
+    console.log(`Servidor corriendo en ${port}`);
 });
