@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, '..', 'images')));
 
 const dbUrl= process.env.DB_URL;
-const pool = mysql.createPool(dbUrl)
+const db = mysql.createPool(dbUrl)
 
 db.connect(err => {
     if (err) {
