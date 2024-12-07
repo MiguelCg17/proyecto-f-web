@@ -22,7 +22,7 @@ const db = mysql.createPool(dbUrl);
 
 // Ruta para servir el formulario de inicio de sesión
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'Frontend', 'login.html'));
+    res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 // Ruta para autenticar al usuario
@@ -45,12 +45,12 @@ app.post('/login', (req, res) => {
 
 // Ruta para servir el formulario de administración
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'Frontend', 'admin.html'));
+    res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // Ruta para servir el formulario de usuario
 app.get('/usuario', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'Frontend', 'usuario.html'));
+    res.sendFile(path.join(__dirname,  'usuario.html'));
 });
 
 // Obtener todos los animales
